@@ -12,6 +12,8 @@
         <div class="header-menu">
             <span class="header-btn" onclick="location.href='/main'">home</span>
             <span class="header-btn" onclick="location.href='/surfing'">surfing</span>
+            <span class="header-btn" onclick="location.href=''">community</span>
+            <span class="header-btn" onclick="location.href=''">groups</span>
             <span class="header-btn" onclick="location.href=''">login</span>
             <span class="header-btn" onclick="location.href=''">sign up</span>
         </div>

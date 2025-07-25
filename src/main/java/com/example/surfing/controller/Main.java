@@ -1,5 +1,6 @@
 package com.example.surfing.controller;
 
+import com.example.surfing.dao.SurfingAPI;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,6 +13,8 @@ import java.io.IOException;
 public class Main extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("Main.jsp").forward(request, response);
+
+
     }
 
 }
