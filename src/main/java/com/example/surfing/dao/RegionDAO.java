@@ -27,10 +27,7 @@ public class RegionDAO {
 
             while (rs.next()) {
                 RegionDTO dto = new RegionDTO();
-                dto.setId(rs.getLong("id"));
                 dto.setName(rs.getString("name"));
-                dto.setLat(rs.getFloat("lat"));
-                dto.setLon(rs.getFloat("lon"));
                 list.add(dto);
             }
 
@@ -56,10 +53,8 @@ public class RegionDAO {
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 RegionDTO dto = new RegionDTO();
-                dto.setId(rs.getLong("id"));
+                dto.setId(rs.getLong("region_id"));
                 dto.setName(rs.getString("name"));
-                dto.setLat(rs.getFloat("lat"));
-                dto.setLon(rs.getFloat("lon"));
                 dto.setType(rs.getString("type"));
                 list.add(dto);
             }

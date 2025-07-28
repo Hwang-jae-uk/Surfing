@@ -20,8 +20,15 @@
 }
 .header-btn{
     cursor: pointer;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
 }
+@media (max-width: 980px) {
+    .header-btn{
+        font-size: 1.5rem;
+    }
+
+}
+
 @media (max-width: 735px) {
     .header-btn{
         font-size: 1.1rem;

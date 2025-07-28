@@ -4,8 +4,6 @@ public class RegionDTO {
     Long id;
     String name;
     String type;
-    float lat;
-    float lon;
 
     public Long getId() {
         return id;
@@ -31,21 +29,6 @@ public class RegionDTO {
         this.type = type;
     }
 
-    public float getLat() {
-        return lat;
-    }
-
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLon() {
-        return lon;
-    }
-
-    public void setLon(float lon) {
-        this.lon = lon;
-    }
 
 
 }

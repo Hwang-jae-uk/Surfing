@@ -3,19 +3,20 @@ html , body{
     width: 100%;
     margin: auto;
 }
-.main-wrapper{
-    width: 100%;
+.main-wrapper {
+    width: 99%;
+    margin: auto;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
 }
 
 .main-container{
     display: flex;
     gap: 1%;
     margin-top: 1%;
+    justify-content: center;
 }
 .main-img-container{
-
     position: relative;
     width: 50%;
     height: auto;

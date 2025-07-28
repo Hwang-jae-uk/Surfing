@@ -2,6 +2,10 @@ html , body{
     width: 100%;
     margin: auto;
 }
+.surfing-wrapper{
+    width: 98%;
+    margin : auto
+}
 
 .mapModal-remove-btn{
     border: none;
@@ -40,9 +44,61 @@ html , body{
     border-radius: 15px;
 }
 
+.surfing-region-form {
+    border-radius: 15px;
+    height: 45px;
+    width: 170px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.surfingGroup{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 4%;
+}
+
+.map-btn{
+    background-color: white;
+    height: 38px;
+    width: 75px;
+    border-radius: 15px;
+}
+
+.surfingMap{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+
+}
+.surfing-region-info{
+    display: flex;
+    flex-direction: row;
+    gap: 15%;
+}
+
+.surfing-region-info-detail > div{
+    width: 140%;
+    font-size: 1.15rem;
+    margin-top: 6%;
+}
 
 /* 애니메이션 */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+@media (max-width: 980px) {
+    .surfing-region-info-detail > div{
+        width: 120%;
+        font-size: 1rem;
+    }
+    
 }
