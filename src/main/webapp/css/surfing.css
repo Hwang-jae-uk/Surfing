@@ -4,7 +4,7 @@ html , body{
 }
 .surfing-wrapper{
     width: 98%;
-    margin : auto
+    margin : auto;
 }
 
 .mapModal-remove-btn{
@@ -56,7 +56,8 @@ html , body{
 .surfingGroup{
     display: flex;
     flex-direction: column;
-    margin-top: 5%;
+    margin-top: 3%;
+    margin-bottom: 2%;
     border: 1px solid black;
     border-radius: 20px;
     padding: 4%;
@@ -80,13 +81,18 @@ html , body{
 .surfing-region-info{
     display: flex;
     flex-direction: row;
-    gap: 15%;
+    gap: 10%;
+}
+
+.surfing-region-info-detail{
+    margin-left: 3%;
 }
 
 .surfing-region-info-detail > div{
     width: 140%;
     font-size: 1.15rem;
     margin-top: 6%;
+
 }
 
 /* 애니메이션 */

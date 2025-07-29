@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,38 +149,43 @@ public class SurfingAPI {
     }
 
     public List<Item> surfing() throws IOException {
-    StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/1192136/fcstSurfing/GetFcstSurfingApiService");
-    urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=7A%2Fkol6QOz7jdmu7b3D2DE3mAV3KtguRlCUtSzJua%2FSaDYgzopHzx4NszovzTawflMpXdGtMHY6BsxFkkmgvXw%3D%3D");
-    urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "="+URLEncoder.encode("json" , "UTF-8"));
-    urlBuilder.append("&" + URLEncoder.encode("reqDate","UTF-8") + "="+URLEncoder.encode("2025072500" , "UTF-8"));
-    urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "="+URLEncoder.encode("1" , "UTF-8"));
-    urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "="+URLEncoder.encode("300" , "UTF-8"));
 
-    URL url = new URL(urlBuilder.toString());
-    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-    conn.setRequestMethod("GET");
-    conn.setRequestProperty("Content-Type", "application/json");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-    BufferedReader rd;
+        String currentDate = LocalDate.now().format(dateFormat)+"00";
 
-    if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-        rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
-    } else {
-        rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
-    }
-    StringBuilder sb = new StringBuilder();
-    String line;
+        StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/1192136/fcstSurfing/GetFcstSurfingApiService");
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=7A%2Fkol6QOz7jdmu7b3D2DE3mAV3KtguRlCUtSzJua%2FSaDYgzopHzx4NszovzTawflMpXdGtMHY6BsxFkkmgvXw%3D%3D");
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "="+URLEncoder.encode("json" , "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("reqDate","UTF-8") + "="+URLEncoder.encode(currentDate , "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "="+URLEncoder.encode("1" , "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "="+URLEncoder.encode("300" , "UTF-8"));
 
-    while ((line = rd.readLine()) != null) {sb.append(line);}
-    rd.close();
-    conn.disconnect();
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-Type", "application/json");
 
-    Gson gson = new Gson();
-    Root root = gson.fromJson(sb.toString(), Root.class);
+        BufferedReader rd;
 
-    List<Item> items = root.response.body.items.item;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
 
-    return items;
+        while ((line = rd.readLine()) != null) {sb.append(line);}
+        rd.close();
+        conn.disconnect();
+
+        Gson gson = new Gson();
+        Root root = gson.fromJson(sb.toString(), Root.class);
+
+        List<Item> items = root.response.body.items.item;
+
+        return items;
 
 
     }

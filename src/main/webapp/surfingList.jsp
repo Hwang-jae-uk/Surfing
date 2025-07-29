@@ -17,9 +17,11 @@
     <div class="surfing-region-info">
       <c:forEach var="i" begin="0" end="${fn:length(surfingList) - 1}" step="2">
         <div onclick="showModal(${i})" class="surfing-region-info-detail">
-          <div>${surfingList[i].predcYmd}</div>
-          <div>오전: ${surfingList[i].totalIndex} (${surfingList[i].lastScr})</div>
-          <div>오후: ${surfingList[i+1].totalIndex} (${surfingList[i+1].lastScr})</div>
+          <div>📅${surfingList[i].predcYmd}</div>
+          <div>🌊오전: ${surfingList[i].totalIndex} (${surfingList[i].lastScr})</div>
+          <c:if test="${!empty surfingList[i+1].lastScr}">
+            <div>🌊오후: ${surfingList[i+1].totalIndex} (${surfingList[i+1].lastScr})</div>
+          </c:if>
         </div>
       </c:forEach>
     </div>
@@ -28,7 +30,7 @@
         <!-- 상세 모달 내용 -->
         <div id="modal-${i}" class="modal" style="display:none;" >
           <div id="modal-content-${i}" >
-            <h4 style="cursor: pointer" onclick="closeSurfingInfoModal(${i})">${surfingList[i].surfPlcNm} - ${surfingList[i].predcYmd} &nbsp;&nbsp;-&nbsp;&nbsp; 닫기</h4>
+            <h3 style="cursor: pointer" onclick="closeSurfingInfoModal(${i})" >${surfingList[i].predcYmd} &nbsp;&nbsp;-&nbsp;&nbsp; 닫기</h3>
             <p>🌊 오전</p>
             <ul>
               <li>평균 높이: ${surfingList[i].avgWvhgt}</li>
@@ -36,13 +38,15 @@
               <li>풍속: ${surfingList[i].avgWspd}</li>
               <li>수온: ${surfingList[i].avgWtem}</li>
             </ul>
-            <p>🌊 오후</p>
-            <ul>
-              <li>평균 높이: ${surfingList[i+1].avgWvhgt}</li>
-              <li>파도 주기: ${surfingList[i+1].avgWvpd}</li>
-              <li>풍속: ${surfingList[i+1].avgWspd}</li>
-              <li>수온: ${surfingList[i+1].avgWtem}</li>
-            </ul>
+            <c:if test="${surfingList[i+1].avgWvhgt != '' && surfingList[i+1].avgWvhgt!= ' ' &&!empty surfingList[i+1].avgWvhgt}">
+              <p>🌊 오후</p>
+              <ul>
+                <li>평균 높이: ${surfingList[i+1].avgWvhgt}</li>
+                <li>파도 주기: ${surfingList[i+1].avgWvpd}</li>
+                <li>풍속: ${surfingList[i+1].avgWspd}</li>
+                <li>수온: ${surfingList[i+1].avgWtem}</li>
+              </ul>
+            </c:if>
           </div>
         </div>
       </c:forEach>
@@ -73,5 +77,17 @@
   function closeMapModal() {
     document.getElementById('mapModal').style.display = 'none';
   }
+ 
+    function searchRegionList(region) {
+    fetch("/searchRegion?region=" + encodeURIComponent(region))
+            .then(response => response.text())
+            .then(html => {
+              document.getElementById("surfingListContainer").innerHTML = html;
+            })
+            .catch(error => {
+              console.error("검색 실패:", error);
+            });
+  }
+
 </script>
 
