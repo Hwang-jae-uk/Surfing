@@ -13,9 +13,9 @@
             <span class="header-btn" onclick="location.href='/main'">home</span>
             <span class="header-btn" onclick="location.href='/surfing'">surfing</span>
             <span class="header-btn" onclick="location.href='/community'">community</span>
-            <span class="header-btn" onclick="location.href=''">groups</span>
-            <span class="header-btn" onclick="location.href=''">login</span>
-            <span class="header-btn" onclick="location.href=''">sign up</span>
+            <span class="header-btn" onclick="location.href='/groups'">groups</span>
+            <span class="header-btn" onclick="location.href='/login'">login</span>
+            <span class="header-btn" onclick="location.href='/signup'">sign up</span>
         </div>
     </div>
 </body>
