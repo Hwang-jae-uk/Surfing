@@ -15,7 +15,7 @@
         <div id="modalMap" style="width:100%; height:100%;"></div>
     </div>
     <div class="surfing-region-info">
-      <c:forEach var="i" begin="0" end="${fn:length(surfingList) - 1}" step="2">
+      <c:forEach var="i" begin="0" end="${(surfingList.size()) - 1}" step="2">
         <div onclick="showModal(${i})" class="surfing-region-info-detail">
           <div>📅${surfingList[i].predcYmd}</div>
           <div>🌊오전: ${surfingList[i].totalIndex} (${surfingList[i].lastScr})</div>
@@ -78,16 +78,7 @@
     document.getElementById('mapModal').style.display = 'none';
   }
  
-    function searchRegionList(region) {
-    fetch("/searchRegion?region=" + encodeURIComponent(region))
-            .then(response => response.text())
-            .then(html => {
-              document.getElementById("surfingListContainer").innerHTML = html;
-            })
-            .catch(error => {
-              console.error("검색 실패:", error);
-            });
-  }
+
 
 </script>
 

@@ -69,49 +69,176 @@
                 </div>
                 <button class="join-btn">View Details</button>
             </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            <div class="group-card" data-from="daegu" data-to="pohang" data-date="2024-08-15">
+                <div class="card-header">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">BeachLover</span>
+                </div>
+                <div class="group-info">
+                    <p><strong>From:</strong> Daegu</p>
+                    <p><strong>To:</strong> Pohang (Wolpo Beach)</p>
+                    <p><strong>Date:</strong> 2024-08-15</p>
+                </div>
+                <button class="join-btn">View Details</button>
+            </div>
+            
         </div>
     </div>
 
     <!-- Search Modal -->
-    <div id="search-modal" class="search-modal-overlay hidden">
-        <div class="search-modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Search for a Group</h2>
-            <form id="group-search-form">
-                <div class="search-input-group">
-                    <label for="from-location">From</label>
-                    <input type="text" id="from-location" placeholder="e.g., Seoul">
-                </div>
-                <div class="search-input-group">
-                    <label for="to-location">To</label>
-                    <input type="text" id="to-location" placeholder="e.g., Yangyang">
-                </div>
-                <div class="search-input-group">
-                    <label for="search-date">Date</label>
-                    <input type="date" id="search-date">
-                </div>
-                <button type="submit" class="find-btn">Find Groups</button>
-            </form>
+    <div class="modal-wrapper" style="display: none">
+        <div id="search-modal" class="search-modal-overlay" >
+            <div class="search-modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Search for a Group</h2>
+                <form id="group-search-form">
+                    <div class="search-input-group">
+                        <label for="from-location">From</label>
+                        <input type="text" id="from-location" placeholder="e.g., Seoul">
+                    </div>
+                    <div class="search-input-group">
+                        <label for="to-location">To</label>
+                        <input type="text" id="to-location" placeholder="e.g., Yangyang">
+                    </div>
+                    <div class="search-input-group">
+                        <label for="search-date">Date</label>
+                        <input type="date" id="search-date">
+                    </div>
+                    <button type="submit" class="find-btn">Find Groups</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
         // Modal handling
         const searchBtn = document.getElementById('search-btn');
-        const searchModal = document.getElementById('search-modal');
+        const modalWrapper  = document.querySelector('.modal-wrapper');
         const closeBtn = document.querySelector('.close-btn');
 
         searchBtn.addEventListener('click', () => {
-            searchModal.classList.remove('hidden');
+            modalWrapper .style.display='block';
         });
 
         closeBtn.addEventListener('click', () => {
-            searchModal.classList.add('hidden');
+            modalWrapper .style.display='none';
         });
 
         window.addEventListener('click', (event) => {
-            if (event.target === searchModal) {
-                searchModal.classList.add('hidden');
+            const modalOvlay = document.getElementById('search-modal')
+            if (event.target === modalWrapper ) {
+                modalWrapper .style.display='none';
+            }
+            if(event.target === modalOvlay){
+                modalWrapper.style.display='none';
             }
         });
 
@@ -141,7 +268,7 @@
                 }
             });
 
-            searchModal.classList.add('hidden'); // Hide modal after search
+            modalWrapper.style.display='none'; // Hide modal after search
         });
     </script>
 </body>

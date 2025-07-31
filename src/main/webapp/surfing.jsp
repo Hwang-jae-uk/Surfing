@@ -33,6 +33,19 @@
       </div>
   </div>
 
+<script>
+    function searchRegionList(region) {
+        fetch("/searchRegion?region=" + encodeURIComponent(region))
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("surfingListContainer").innerHTML = html;
+            })
+            .catch(error => {
+                console.error("검색 실패:", error);
+            });
+    }
+</script>
+
 
 </body>
 </html>

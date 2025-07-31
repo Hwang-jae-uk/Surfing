@@ -131,21 +131,20 @@ html, body {
 
 /* --- Search Modal Styles --- */
 
-.hidden {
-    display: none;
-}
-
-.search-modal-overlay {
+.modal-wrapper {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    top: 0;
+    left: 0;
+}
+
+.search-modal-overlay{
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
 }
 
 .search-modal-content {
