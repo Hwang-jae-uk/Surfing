@@ -8,11 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/login")
-public class Login extends HttpServlet {
+@WebServlet("/postwrite")
+public class PostWrite  extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
 
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("/postwrite.jsp").forward(request,response);
     }
+
 }

@@ -11,7 +11,7 @@
             <h1>Log In</h1>
             <form action="login_process.jsp" method="post">
                 <div class="input-group">
-                    <label for="username">Username or Email</label>
+                    <label for="username">Email</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div class="input-group">

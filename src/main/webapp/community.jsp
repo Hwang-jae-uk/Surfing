@@ -28,14 +28,8 @@
                 <!-- Sample Data -->
                 <tr>
                     <td>1</td>
-                    <td><a href="post.jsp?id=1">First post</a></td>
+                    <td><a href="/post?id=">First post</a></td>
                     <td>Admin</td>
-                    <td>2024-07-29</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="post.jsp?id=2">Second post</a></td>
-                    <td>User1</td>
                     <td>2024-07-29</td>
                 </tr>
             </tbody>
