@@ -127,46 +127,79 @@
     function showMap(lat, lng) {
         document.getElementById('mapModal').style.display = 'block';
         const mapAddressEl = document.getElementById('mapAddress');
-        mapAddressEl.innerText = '주소를 불러오는 중...'; // Set loading state
+        mapAddressEl.innerText = '주소를 불러오는 중...';
 
         const map = new naver.maps.Map('modalMap', {
             center: new naver.maps.LatLng(lat, lng),
-            zoom: 15
+            zoom: 15,
+            mapTypeControl: true
         });
-        new naver.maps.Marker({
+
+        const marker = new naver.maps.Marker({
             position: new naver.maps.LatLng(lat, lng),
             map: map
         });
-        console.log(naver.maps.Service);
-        // Reverse Geocoding
-        naver.maps.Service.reverseGeocode({
-            coords: new naver.maps.LatLng(lat, lng),
-            orders: [naver.maps.Service.OrderType.ADDR],
-            output: 'json',
-            v2: true
-        }, function(status, response) {
-            console.log("status",status)
-            console.log("response" , response)
-            console.log(lat,lng)
-            if (status !== naver.maps.Service.Status.OK) {
-                mapAddressEl.innerText = '주소 조회에 실패했습니다.';
-                return;
-            }
 
+        const infoWindow = new naver.maps.InfoWindow({
+            anchorSkew: true
+        });
 
-            const result = response.v2.results[0]; // 응답이 있는 경우
-            if (result) {
-                const address = result.region.area1.name + " " +
-                    result.region.area2.name + " " +
-                    result.region.area3.name + " " +
-                    (result.land.name || '') + " " +
-                    (result.land.number1 || '');
-                mapAddressEl.innerText = address.trim();
-            } else {
-                mapAddressEl.innerText = '주소 정보가 없습니다.';
-            }
+        function makeAddress(item) {
+            if (!item) return '';
+            const { name, region, land } = item;
+            const isRoad = name === 'roadaddr';
+            let address = [
+                region?.area1?.name || '',
+                region?.area2?.name || '',
+                region?.area3?.name || '',
+                region?.area4?.name || '',
+                land?.name || '',
+                land?.number1 || ''
+            ].join(' ').replace(/\s+/g, ' ').trim();
+            return address;
+        }
+
+        function searchCoordinateToAddress(latlng) {
+            naver.maps.Service.reverseGeocode({
+                coords: latlng,
+                orders: [naver.maps.Service.OrderType.ADDR, naver.maps.Service.OrderType.ROAD_ADDR].join(',')
+            }, function(status, response) {
+                if (status !== naver.maps.Service.Status.OK) {
+                    mapAddressEl.innerText = '주소 조회 실패';
+                    return;
+                }
+
+                try {
+                    const results = response.v2.results;
+                    if (!results || results.length === 0) {
+                        mapAddressEl.innerText = '주소 정보가 없습니다.';
+                        return;
+                    }
+
+                    const address = makeAddress(results[0]);
+                    mapAddressEl.innerText = address;
+
+                    infoWindow.setContent('<div style="padding:10px;min-width:200px;">' + address + '</div>');
+                    infoWindow.open(map, latlng);
+                } catch (e) {
+                    console.error('주소 파싱 오류:', e);
+                    mapAddressEl.innerText = '주소 파싱 중 오류 발생';
+                }
+            });
+        }
+
+        // 초기 마커 위치 주소 조회
+        const initialLatLng = new naver.maps.LatLng(lat, lng);
+        searchCoordinateToAddress(initialLatLng);
+
+        // 클릭 시 마커 이동 및 주소 갱신
+        map.addListener('click', function(e) {
+            const clickLatLng = e.coord;
+            marker.setPosition(clickLatLng);
+            searchCoordinateToAddress(clickLatLng);
         });
     }
+
 
     function closeMapModal() {
         document.getElementById('mapModal').style.display = 'none';
