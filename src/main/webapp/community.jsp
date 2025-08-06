@@ -1,6 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community</title>
     <link rel="stylesheet" href="css/community.css"/>
 </head>
@@ -13,34 +16,35 @@
                 <input type="text" placeholder="Search...">
                 <button type="submit">Search</button>
             </form>
-            <button class="write-btn" onclick="location.href='write.jsp'">Write</button>
+            <button class="write-btn" onclick="location.href='/community/write'">Write</button>
         </div>
         <table class="post-table">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Title</th>
-                    <th>Author</th>
+                    <th>userName</th>
                     <th>Date</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Sample Data -->
-                <tr>
-                    <td>1</td>
-                    <td><a href="/post?id=">First post</a></td>
-                    <td>Admin</td>
-                    <td>2024-07-29</td>
-                </tr>
+                <c:if test="${empty posts}">
+                    <tr>
+                        <td colspan="4">아직 게시글이 없습니다.</td>
+                    </tr>
+                </c:if>
+                <c:if test="${not empty posts}">
+                    <c:forEach var="post" items="${posts}" varStatus="status">
+                        <tr>
+                            <td>${status.index+1}</td>
+                            <td><a href="/community/view?id=${post.communityPostId}">${post.title}</a></td>
+                            <td>${post.userName}</td>
+                            <td><fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd"/></td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
             </tbody>
         </table>
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">&raquo;</a>
-        </div>
     </div>
 </body>
 </html>

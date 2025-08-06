@@ -1,7 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="css/signup.css"/>
 </head>
@@ -21,7 +24,7 @@
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" minlength="8" placeholder="8자이상" required>
+                    <input type="password" id="password" name="password"  placeholder="8자이상" required>
                 </div>
                 <div class="input-group">
                     <label for="confirm-password">Confirm Password</label>
@@ -29,7 +32,7 @@
                 </div>
                 <div class="input-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone" minlength="11" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required placeholder="숫자만 입력하세요.">
+                    <input type="tel" id="phone" name="phone" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required placeholder="숫자만 입력하세요.">
                 </div>
                 <button type="submit" class="signup-btn">Create Account</button>
             </form>
@@ -43,5 +46,17 @@
             alert('${error}')
     </script>
 </c:if>
+<script>
+    document.querySelector('form').addEventListener('submit' , function (e){
+
+        const phone = document.getElementById('phone').value;
+        if(phone.length !==11){
+            alert("전화번호는 11자리여야 합니다.")
+            e.preventDefault()
+            return false;
+        }
+        return true;
+    })
+</script>
 </body>
 </html>

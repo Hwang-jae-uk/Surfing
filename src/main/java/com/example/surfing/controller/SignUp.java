@@ -30,7 +30,7 @@ public class SignUp extends HttpServlet {
         }
 
         UserDTO userDTO = new UserDTO();
-        userDTO.setUsername(username);
+        userDTO.setUserName(username);
         userDTO.setEmail(email);
         userDTO.setPassword(password);
         userDTO.setPhone(phone);

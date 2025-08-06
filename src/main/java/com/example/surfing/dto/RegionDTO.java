@@ -4,6 +4,26 @@ public class RegionDTO {
     Long id;
     String name;
     String type;
+    String address;
+    Long count;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
+    }
+
+
 
     public Long getId() {
         return id;

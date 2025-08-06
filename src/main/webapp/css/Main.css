@@ -1,20 +1,20 @@
 html , body{
-    min-width: 490px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     width: 100%;
     margin: auto;
 }
 .main-wrapper {
+    min-width: 390px;
     width: 99%;
     margin: auto;
-    display: flex;
-    justify-content: center;
+
 }
 
 .main-container{
     display: flex;
     gap: 1%;
     margin-top: 1%;
-    justify-content: center;
+
 }
 .main-img-container{
     position: relative;
@@ -48,17 +48,17 @@ html , body{
 }
 
 @media (max-width: 735px) {
-    .main-img-text{
-        font-size: 1rem;
+
+    .main-container{
+        flex-direction: column;
+    }
+    .main-img-container{
+
+        width: 100%;
+
     }
 
 }
 
-@media (max-width: 490px) {
-    .main-img-text{
-        font-size: 0.8rem;
-    }
-
-}
 
 

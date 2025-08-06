@@ -111,3 +111,18 @@ html , body{
     }
     
 }
+
+@media (max-width: 475px) {
+    .surfing-wrapper-overlay > h1 {
+        font-size: 40px;
+    }
+    .surfing-region-form {
+        border-radius: 15px;
+        height: 40px;
+        width: 250px;
+        font-size: 20px;
+        font-weight: 450;
+        text-align: center;
+    }
+
+}

@@ -152,7 +152,7 @@ public class SurfingAPI {
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-        String currentDate = LocalDate.now().format(dateFormat)+"00";
+        String currentDate = (LocalDate.now().format(dateFormat))+"00";
 
         StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/1192136/fcstSurfing/GetFcstSurfingApiService");
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=7A%2Fkol6QOz7jdmu7b3D2DE3mAV3KtguRlCUtSzJua%2FSaDYgzopHzx4NszovzTawflMpXdGtMHY6BsxFkkmgvXw%3D%3D");

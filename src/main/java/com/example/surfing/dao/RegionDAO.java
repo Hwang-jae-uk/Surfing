@@ -56,6 +56,7 @@ public class RegionDAO {
                 dto.setId(rs.getLong("region_id"));
                 dto.setName(rs.getString("name"));
                 dto.setType(rs.getString("type"));
+                dto.setAddress(rs.getString("address"));
                 list.add(dto);
             }
         }catch (Exception e) {

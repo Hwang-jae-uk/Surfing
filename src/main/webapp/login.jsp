@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
     <link rel="stylesheet" href="css/login.css"/>
 </head>
@@ -9,10 +10,10 @@
     <div class="login-wrapper">
         <div class="login-box">
             <h1>Log In</h1>
-            <form action="login_process.jsp" method="post">
+            <form action="/login" method="post">
                 <div class="input-group">
-                    <label for="username">Email</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>

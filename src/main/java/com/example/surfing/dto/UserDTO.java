@@ -2,8 +2,8 @@ package com.example.surfing.dto;
 
 public class UserDTO {
 
-    private long id;
-    private String username;
+    private long userId;
+    private String userName;
     private String password;
     private String phone;
     private String email;
@@ -16,20 +16,20 @@ public class UserDTO {
         this.email = email;
     }
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(long id) {
+        this.userId = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String username) {
+        this.userName = username;
     }
 
     public String getPassword() {

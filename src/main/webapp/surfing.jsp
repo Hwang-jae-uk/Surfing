@@ -5,12 +5,13 @@
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>surfing</title>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=1xvj76oytg&submodules=geocoder"></script>
     <link rel="stylesheet" href="css/surfing.css"/>
 </head>
+<jsp:include page="header.jsp"/>
 <body>
-  <jsp:include page="header.jsp"/>
   <div class="surfing-wrapper">
       <div class="surfing-wrapper-overlay">
           <h1>지역을 선택해주세요</h1>
@@ -75,6 +76,16 @@
   </div>
 
 <script>
+    window.onload = function () {
+        const regionSelect = document.querySelector('select[name="searchRegion"]');
+        const defaultValue = regionSelect.value;
+
+        // 처음 들어오면 전체 데이터를 로딩하도록 호출
+        if (defaultValue === "") {
+            searchRegionList(""); // 전체 요청
+        }
+    };
+
     function searchRegionList(region) {
         fetch("/searchRegion?region=" + encodeURIComponent(region))
             .then(response => response.text())
@@ -124,79 +135,20 @@
         detailsModal.style.display = 'none';
     }
 
-    function showMap(lat, lng) {
+    function showMap(lat , lot , address) {
         document.getElementById('mapModal').style.display = 'block';
         const mapAddressEl = document.getElementById('mapAddress');
-        mapAddressEl.innerText = '주소를 불러오는 중...';
+        mapAddressEl.innerText = address;
 
         const map = new naver.maps.Map('modalMap', {
-            center: new naver.maps.LatLng(lat, lng),
+            center: new naver.maps.LatLng(lat, lot),
             zoom: 15,
             mapTypeControl: true
         });
 
         const marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(lat, lng),
+            position: new naver.maps.LatLng(lat, lot),
             map: map
-        });
-
-        const infoWindow = new naver.maps.InfoWindow({
-            anchorSkew: true
-        });
-
-        function makeAddress(item) {
-            if (!item) return '';
-            const { name, region, land } = item;
-            const isRoad = name === 'roadaddr';
-            let address = [
-                region?.area1?.name || '',
-                region?.area2?.name || '',
-                region?.area3?.name || '',
-                region?.area4?.name || '',
-                land?.name || '',
-                land?.number1 || ''
-            ].join(' ').replace(/\s+/g, ' ').trim();
-            return address;
-        }
-
-        function searchCoordinateToAddress(latlng) {
-            naver.maps.Service.reverseGeocode({
-                coords: latlng,
-                orders: [naver.maps.Service.OrderType.ADDR, naver.maps.Service.OrderType.ROAD_ADDR].join(',')
-            }, function(status, response) {
-                if (status !== naver.maps.Service.Status.OK) {
-                    mapAddressEl.innerText = '주소 조회 실패';
-                    return;
-                }
-
-                try {
-                    const results = response.v2.results;
-                    if (!results || results.length === 0) {
-                        mapAddressEl.innerText = '주소 정보가 없습니다.';
-                        return;
-                    }
-
-                    const address = makeAddress(results[0]);
-                    mapAddressEl.innerText = address;
-
-                    infoWindow.setContent('<div style="padding:10px;min-width:200px;">' + address + '</div>');
-                    infoWindow.open(map, latlng);
-                } catch (e) {
-                    console.error('주소 파싱 오류:', e);
-                    mapAddressEl.innerText = '주소 파싱 중 오류 발생';
-                }
-            });
-        }
-
-        // 초기 마커 위치 주소 조회
-        const initialLatLng = new naver.maps.LatLng(lat, lng);
-        searchCoordinateToAddress(initialLatLng);
-
-        // 클릭 시 마커 이동 및 주소 갱신
-        map.addListener('click', function(e) {
-            const clickLatLng = e.coord;
-            marker.setPosition(clickLatLng);
-            searchCoordinateToAddress(clickLatLng);
         });
     }
 

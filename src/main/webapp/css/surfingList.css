@@ -10,7 +10,7 @@ html, body {
 .surfing-list-wrapper {
     width: 90%;
     max-width: 1200px;
-    margin: 40px auto;
+    margin: auto;
     padding: 20px;
 }
 
@@ -104,13 +104,31 @@ html, body {
     display: block; /* Ensure it takes its own line */
 }
 
+.grades {
+    display: flex;
+    flex-direction: column; /* Stack grades vertically */
+    gap: 8px; /* Space between morning and afternoon grades */
+}
+
 .forecast-grade {
+    display: flex;
+    align-items: center; /* Align label and value vertically */
     font-weight: 600;
+    font-size: 0.95em;
+}
+
+.grade-label {
+    width: 50px; /* Fixed width for labels (e.g., "오전:") */
+    color: #555; /* Dark grey color for the label */
+    flex-shrink: 0; /* Prevent the label from shrinking */
+}
+
+.grade-value {
     padding: 5px 10px;
     border-radius: 4px;
-    color: black;
-    margin-right: 8px; /* Space between grades */
-    font-size: 0.95em;
+    color: white; /* Text color for the value */
+    text-align: center;
+    flex-grow: 1; /* Allow the value to take up remaining space */
 }
 
 
@@ -243,4 +261,14 @@ html, body {
 .modal-body > div > ul > li > span:nth-child(2) {
     width: 80%;
     text-align: center;
+}
+
+@media (max-width: 735px) {
+    .surfing-list-wrapper {
+        width: 90%;
+        margin: 0;
+    }
+    .surfing-list-header > h1{
+        font-size: 30px;
+    }
 }

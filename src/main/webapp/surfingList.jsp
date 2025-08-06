@@ -10,11 +10,11 @@
 
     <div class="surfing-cards-container">
         <c:forEach var="entry" items="${groupedData}">
-            <c:set var="surfingList" value="${entry.value}" />
+            <c:set var="surfingList" value="${entry.value.items}" />
             <div class="surfing-card">
                 <div class="card-header">
                     <span class="beach-name">${entry.key}</span>
-                    <button class="map-btn" type="button" onclick="showMap('${surfingList[0].lat}', '${surfingList[0].lot}')">지도보기</button>
+                    <button class="map-btn" type="button" onclick="showMap(${surfingList[0].lat}, ${surfingList[0].lot} , '${entry.value.address}')">지도보기</button>
                 </div>
                 <div class="forecast-list">
                     <c:forEach var="i" begin="0" end="${fn:length(surfingList) - 1}" step="2">

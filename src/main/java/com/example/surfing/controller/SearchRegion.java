@@ -3,6 +3,7 @@ package com.example.surfing.controller;
 
 import com.example.surfing.dao.RegionDAO;
 import com.example.surfing.dao.SurfingAPI;
+import com.example.surfing.dto.CustomGroup;
 import com.example.surfing.dto.RegionDTO;
 import com.example.surfing.utill.JSFunction;
 import jakarta.servlet.ServletException;
@@ -27,21 +28,33 @@ public class SearchRegion extends HttpServlet {
         RegionDAO regionDAO = new RegionDAO();
         List<RegionDTO> regionDTOList = regionDAO.getRegionByType(type);
 
-        List<String> names = regionDTOList.stream().map(RegionDTO::getName).collect(Collectors.toList());
+        Map<String ,String> names = regionDTOList.stream()
+                .filter(regionDTO -> regionDTO.getName() != null && regionDTO.getAddress() != null)
+                .collect(Collectors.toMap(RegionDTO::getName , RegionDTO::getAddress));
 
 
         SurfingAPI api = new SurfingAPI();
         List<SurfingAPI.Item> surfingDatabefore = api.surfing();
 
         List<SurfingAPI.Item> filteredsurfingData = surfingDatabefore.stream()
-                .filter(item -> names.contains(item.surfPlcNm))
+                .filter(item -> names.containsKey(item.getSurfPlcNm()))
                 .collect(Collectors.toList());
 
         List<SurfingAPI.Item> sortedsurfingData = filteredsurfingData.stream()
-                .sorted(Comparator.comparing(SurfingAPI.Item::getSurfPlcNm)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(SurfingAPI.Item::getSurfPlcNm))
+                .collect(Collectors.toList());
 
-        Map<String, List<SurfingAPI.Item>> grouped = sortedsurfingData.stream()
-                .collect(Collectors.groupingBy(SurfingAPI.Item::getSurfPlcNm));
+        Map<String, CustomGroup> grouped = sortedsurfingData.stream()
+                .collect(Collectors.groupingBy(
+                        SurfingAPI.Item::getSurfPlcNm,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                items -> new CustomGroup(
+                                        names.getOrDefault(items.get(0).getSurfPlcNm(), "주소없음") ,
+                                        items
+                                )
+                        )
+                ));
 
         request.setAttribute("groupedData", grouped);
 
