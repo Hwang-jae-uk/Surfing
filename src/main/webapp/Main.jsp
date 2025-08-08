@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,6 +19,27 @@
                 <img class="main-img" onclick="location.href='/groups'" src="/img/main-surfing2.jpg">
                 <div class="main-img-text">함께가자</div>
             </div>
+        </div>
+        <div class="group-card-wrapper">
+            <c:forEach var="group" items="${groups}">
+                <div class="group-cards-container">
+                    <span class="group-card">
+                        <div class="card-header">
+                            <div class="card-header-user">
+                                <div class="user-avatar"></div>
+                                <span class="user-name">${group.userName}</span>
+                            </div>
+                        </div>
+                        <div class="group-info">
+                            ${group.title}
+                            <p><strong>From:</strong> ${group.fromLocation}</p>
+                            <p><strong>To:</strong> ${group.toLocation}</p>
+                            <p><strong>Date:</strong>${group.meetingDate}</p>
+                        </div>
+                        <button class="join-btn">View Details</button>
+                    </span>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </body>

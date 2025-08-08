@@ -31,8 +31,25 @@ html, body {
     display: flex;
     gap: 15px;
 }
+.create-group-btn{
+    padding: 12px 25px;
+    color: white;
+    background-color: #3498DBFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
 
-.create-group-btn, .search-action-btn {
+.create-group-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+
+.search-action-btn {
     padding: 12px 25px;
     color: #ffffff;
     background-color: #333333;
@@ -43,91 +60,77 @@ html, body {
     font-weight: 500;
     transition: background-color 0.3s;
 }
-
-.search-action-btn {
+.search-action-btn:hover {
     background-color: #555;
+    transform: translateY(-2px);
 }
 
-.create-group-btn:hover, .search-action-btn:hover {
-    background-color: #000;
-}
 
 /* Grid container for the cards */
 .group-cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-/* Individual Group Card */
 .group-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    padding: 15px;
+    width: 300px;
     display: flex;
     flex-direction: column;
-}
-
-.group-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    justify-content: space-between;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.card-header-user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .user-avatar {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
     border-radius: 50%;
-    background-color: #e0e0e0;
-    margin-right: 15px;
-    /* In a real app, you'd use an <img> tag here */
+    margin-right: 10px;
 }
 
 .user-name {
-    font-size: 1.2em;
-    font-weight: 600;
-}
-
-.group-info {
-    margin-bottom: 20px;
-    flex-grow: 1; /* Allows this section to grow and push the button down */
+    font-weight: bold;
 }
 
 .group-info p {
-    margin: 0 0 10px;
-    line-height: 1.5;
-}
-
-.group-info p strong {
-    color: #555;
-    margin-right: 8px;
+    margin: 5px 0;
 }
 
 .join-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #333;
-    color: #fff;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    font-weight: 600;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: auto; /* Pushes button to the bottom */
 }
 
-.join-btn:hover {
-    background-color: #555;
+.view-details-btn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Add some space above the button */
 }
+
 
 /* --- Search Modal Styles --- */
 
@@ -145,6 +148,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .search-modal-content {
@@ -156,6 +160,56 @@ html, body {
     box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     position: relative;
     animation: slide-down 0.3s ease-out;
+}
+
+/* --- Details Modal Styles --- */
+.details-modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.details-modal-content {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px; /* Wider for more content */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    position: relative;
+    animation: slide-down 0.3s ease-out;
+}
+
+.close-details-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.close-details-btn:hover {
+    color: #333;
+}
+
+.details-modal-content h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.details-modal-content p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.details-modal-content p strong {
+    color: #333;
 }
 
 @keyframes slide-down {
@@ -226,4 +280,20 @@ html, body {
 
 .find-btn:hover {
     background-color: #555;
+}
+
+.group-card-wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fill , minmax(300px , 1fr));
+    gap: 30px;
+}
+
+.btn-delete-comment {
+    background-color: transparent;
+    color: var(--danger-color);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+}
+.btn-delete-comment:hover {
+    text-decoration: underline;
 }

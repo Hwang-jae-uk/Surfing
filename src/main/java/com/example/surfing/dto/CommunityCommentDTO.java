@@ -3,9 +3,9 @@ package com.example.surfing.dto;
 
 import java.util.Date;
 
-public class CommunityComment {
+public class CommunityCommentDTO {
     private long communityCommentId;
-    private long communityPodstId;
+    private long communityPostId;
     private long userId;
     private String userName;
     private String content;
@@ -19,12 +19,12 @@ public class CommunityComment {
         this.communityCommentId = communityCommentId;
     }
 
-    public long getCommunityPodstId() {
-        return communityPodstId;
+    public long getCommunityPostId() {
+        return communityPostId;
     }
 
-    public void setCommunityPodstId(long communityPodstId) {
-        this.communityPodstId = communityPodstId;
+    public void setCommunityPostId(long communityPodstId) {
+        this.communityPostId = communityPodstId;
     }
 
     public long getUserId() {

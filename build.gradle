@@ -41,6 +41,9 @@ dependencies {
     //bcrypt 비크립
     implementation 'org.mindrot:jbcrypt:0.4'
 
+    // gson toString을 json으로
+    implementation 'com.google.code.gson:gson:2.10.1'
+
 }
 
 test {

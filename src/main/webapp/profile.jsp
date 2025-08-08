@@ -22,11 +22,11 @@
             </div>
             <div class="input-group">
                 <label for="newpassword">New Password</label>
-                <input type="password" id="newpassword" name="newpassword" required>
+                <input type="password" id="newpassword" name="newpassword" >
             </div>
             <div class="input-group">
                 <label for="confirmnewpassword">Confirm New Password</label>
-                <input type="password" id="confirmnewpassword" name="confirmnewpassword" required>
+                <input type="password" id="confirmnewpassword" name="confirmnewpassword" >
             </div>
 
 
@@ -36,8 +36,8 @@
             </div>
             <button type="submit" class="profile-btn">Update Profile</button>
         </form>
-        <div class="delete-link">
-            <p><a href="/delete-account">Delete Account</a></p>
+        <div class="delete-link" onclick="confirm('삭제하시겠습니까?')">
+            <p><a href="/user/delete">Delete Account</a></p>
         </div>
     </div>
 </div>
@@ -55,7 +55,6 @@
             e.preventDefault()
             return false;
         }
-        return true;
     })
 </script>
 </body>

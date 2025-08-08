@@ -120,7 +120,6 @@ public class UserDAO {
 
         Connection con = null;
         PreparedStatement pstmt = null;
-        int result = 0;
         try{
             con=DBManager.getConnection();
             pstmt = con.prepareStatement(sql);
@@ -128,6 +127,7 @@ public class UserDAO {
             pstmt.setString(2,userDTO.getPassword());
             pstmt.setString(3,userDTO.getPhone());
             pstmt.setString(4,userDTO.getEmail());
+            pstmt.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -137,4 +137,23 @@ public class UserDAO {
 
     }
 
+    public void deleteUserByEmail(String email) {
+        String sql = "delete from user where email=?";
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        try {
+            con = DBManager.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1,email);
+            result = pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            DBManager.close(con,pstmt);
+        }
+
+
+    }
 }

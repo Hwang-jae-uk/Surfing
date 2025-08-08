@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -7,6 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>surfing</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=1xvj76oytg&submodules=geocoder"></script>
     <link rel="stylesheet" href="css/surfing.css"/>
 </head>
@@ -15,7 +15,7 @@
   <div class="surfing-wrapper">
       <div class="surfing-wrapper-overlay">
           <h1>지역을 선택해주세요</h1>
-          <form method="get" action="/surfing"  >
+          <form>
               <div>
                   <select class="surfing-region-form" name="searchRegion" onchange="searchRegionList(this.value)">
                       <option value="">전체</option>
@@ -87,10 +87,11 @@
     };
 
     function searchRegionList(region) {
-        fetch("/searchRegion?region=" + encodeURIComponent(region))
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById("surfingListContainer").innerHTML = html;
+        axios.get("/searchRegion", {
+            params: { region: region }
+        })
+            .then(response => {
+                document.getElementById("surfingListContainer").innerHTML = response.data;
             })
             .catch(error => {
                 console.error("검색 실패:", error);

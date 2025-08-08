@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet("/signup")
 public class SignUp extends HttpServlet {
@@ -24,6 +25,8 @@ public class SignUp extends HttpServlet {
         String confirmPassword = request.getParameter("confirm-password");
         String phone = request.getParameter("phone");
 
+        UserDAO userDAO = new UserDAO();
+
         if(!password.equals(confirmPassword)){
             request.setAttribute("error", "두 비밀번호가 일치하지 않습니다.");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
@@ -36,9 +39,8 @@ public class SignUp extends HttpServlet {
         userDTO.setPhone(phone);
 
         try {
-            UserDAO userDAO = new UserDAO();
             userDAO.signupUser(userDTO);
-            JSFunction.alertLocation(response,"회원가입 성공하셨습니다.","/login?"+email);
+            JSFunction.alertLocation(response,"회원가입 성공하셨습니다.","/login?email="+ URLEncoder.encode(email, "UTF-8"));
         }catch(Exception e){
             e.printStackTrace();
             JSFunction.alertBack(response,"회원가입 실패하셨습니다.");

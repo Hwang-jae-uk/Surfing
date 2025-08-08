@@ -30,23 +30,32 @@ public class Profile extends HttpServlet {
         String newPassword = request.getParameter("newpassword");
         String confirmNewPassword = request.getParameter("confirmnewpassword");
         String username = request.getParameter("username");
-        String Phone = request.getParameter("Phone");
+        String phone = request.getParameter("phone");
 
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         UserDAO userDAO = new UserDAO();
         UserDTO user = userDAO.getUserByemail(email);
         String password = user.getPassword();
+        System.out.println(user.getPhone());
 
-        if(!BCrypt.checkpw(password,currentPassword)){
+        if(!BCrypt.checkpw(currentPassword,password)){
             JSFunction.alertBack(response,"현재 비밀번호가 일치하지 않습니다.");
+            return;
         }
         if(!newPassword.equals(confirmNewPassword)){
             JSFunction.alertBack(response,"새 비밀번호가 일치하지 않습니다.");
+            return;
         }
-        user.setPassword(newPassword);
-        user.setUserName(username);
-        user.setPhone(Phone);
+        if(!(newPassword ==null || newPassword.isEmpty())){
+            user.setPassword(newPassword);
+        }
+        if(!user.getUserName().equals(username)){
+            user.setUserName(username);
+        }
+        if(!user.getPhone().equals(phone)){
+            user.setPhone(phone);
+        }
 
 
         userDAO.updateUser(user);

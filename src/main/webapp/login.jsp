@@ -13,7 +13,7 @@
             <form action="/login" method="post">
                 <div class="input-group">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" required>
+                    <input type="email" id="email" name="email" value="${email}" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>

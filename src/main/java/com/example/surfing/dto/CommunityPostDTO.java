@@ -4,9 +4,6 @@ import java.util.Date;
 
 public class CommunityPostDTO {
     private long communityPostId;
-
-
-
     private long userId;
     private String userName;
     private String title;
@@ -21,8 +18,8 @@ public class CommunityPostDTO {
         return communityPostId;
     }
 
-    public void setCommunityPostId(long communitypostId) {
-        this.communityPostId = communitypostId;
+    public void setCommunityPostId(long communityPostId) {
+        this.communityPostId = communityPostId;
     }
 
     public String getUserName() {

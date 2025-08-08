@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter({"/profile" , "/logout.jsp","/community/write"})
+@WebFilter({"/profile" , "/logout.jsp","/community/write","/postcommentdelete","/creategroup","/community/comment","/postdelete","/createGroup"})
 public class AuthFilter implements Filter {
 
     @Override
