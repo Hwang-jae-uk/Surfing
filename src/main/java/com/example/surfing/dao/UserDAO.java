@@ -114,15 +114,24 @@ public class UserDAO {
 
     // 해쉬드해서 알아내기
     public void updateUser(UserDTO userDTO){
-        String hashed = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
+//        String hashed = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
+//        userDTO.setPassword(hashed);
         String sql = "update user set user_name=?,password=?,phone=? where email=?";
-        userDTO.setPassword(hashed);
+        
 
         Connection con = null;
         PreparedStatement pstmt = null;
         try{
             con=DBManager.getConnection();
             pstmt = con.prepareStatement(sql);
+
+            // 비밀번호 변경 시에만 해싱
+            String passwordToSave = userDTO.getPassword();
+            if (passwordToSave != null && !passwordToSave.isEmpty() && !passwordToSave.startsWith("$2a$")) {
+                passwordToSave = BCrypt.hashpw(passwordToSave, BCrypt.gensalt());
+                userDTO.setPassword(passwordToSave);
+            }
+
             pstmt.setString(1,userDTO.getUserName());
             pstmt.setString(2,userDTO.getPassword());
             pstmt.setString(3,userDTO.getPhone());

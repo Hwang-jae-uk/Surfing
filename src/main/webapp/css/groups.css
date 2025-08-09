@@ -109,7 +109,7 @@ html, body {
 }
 
 .group-info p {
-    margin: 5px 0;
+    margin: 20px 0;
 }
 
 .join-btn {
@@ -289,11 +289,19 @@ html, body {
 }
 
 .btn-delete-comment {
-    background-color: transparent;
-    color: var(--danger-color);
-    padding: 0.25rem 0.5rem;
+    padding: 8px 12px;
+    background-color: white;
+    color: #E74C3CFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     font-size: 0.85rem;
+    text-align: center;
 }
-.btn-delete-comment:hover {
-    text-decoration: underline;
+
+.group-delete-form{
+    display: flex;
+    justify-content: center;
 }
+
+

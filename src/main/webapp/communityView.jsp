@@ -17,6 +17,7 @@
                 </div>
                 <c:if test="${post.userId == user.userId}">
                     <div class="post-actions">
+                        <button onclick="location.href='/community/edit'" type="button" id="editPostBtn" class="btn btn-primary">수정</button>
                         <button type="button" id="deletePostBtn" class="btn btn-danger">삭제</button>
                     </div>
                 </c:if>
@@ -38,6 +39,7 @@
                     <div class="comment-date"><fmt:formatDate value="${comment.createdAt}" pattern="yyyy-MM-dd HH:mm"/></div>
                     <c:if test="${comment.userId == user.userId}">
                         <div class="comment-actions">
+                            <button class="btn btn-edit-comment" data-comment-id="${comment.communityCommentId}">수정</button>
                             <button class="btn btn-delete-comment" data-comment-id="${comment.communityCommentId}">삭제</button>
                         </div>
                     </c:if>
@@ -105,6 +107,13 @@
             });
         }
 
+        const editPostBtn = document.getElementById('editPostBtn');
+        if (editPostBtn) {
+            editPostBtn.addEventListener('click', function () {
+                window.location.href = `/community/edit?communityPostId=${post.communityPostId}`;
+            });
+        }
+
         const deletePostBtn = document.getElementById('deletePostBtn');
         if (deletePostBtn) {
             deletePostBtn.addEventListener('click', function () {
@@ -121,6 +130,58 @@
                 }
             });
         }
+
+        document.querySelectorAll('.btn-edit-comment').forEach(button => {
+            button.addEventListener('click', function () {
+                const commentDiv = this.closest('.comment');
+                const commentContent = commentDiv.querySelector('.comment-content');
+                const originalContent = commentContent.textContent;
+
+                // Turn the comment content into a textarea for editing
+                commentContent.innerHTML = `<textarea class="edit-comment-textarea">${originalContent}</textarea>`;
+
+                // Hide edit/delete buttons and show save/cancel buttons
+                const actionsDiv = commentDiv.querySelector('.comment-actions');
+                actionsDiv.style.display = 'none';
+
+                const newActions = document.createElement('div');
+                newActions.className = 'comment-actions-edit';
+                newActions.innerHTML = 
+                    `<button class="btn btn-save-comment">저장</button>
+                     <button class="btn btn-cancel-edit">취소</button>`;
+                commentDiv.appendChild(newActions);
+
+                // Handle save
+                newActions.querySelector('.btn-save-comment').addEventListener('click', () => {
+                    const newContent = commentDiv.querySelector('.edit-comment-textarea').value;
+                    const commentId = this.getAttribute('data-comment-id');
+
+                    axios.post('/community/comment/update', { 
+                        communityCommentId: commentId,
+                        content: newContent
+                    })
+                    .then(response => {
+                        alert('댓글이 수정되었습니다.');
+                        location.reload();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('댓글 수정에 실패했습니다.');
+                        // Restore original view on failure
+                        commentContent.textContent = originalContent;
+                        commentDiv.removeChild(newActions);
+                        actionsDiv.style.display = 'block';
+                    });
+                });
+
+                // Handle cancel
+                newActions.querySelector('.btn-cancel-edit').addEventListener('click', () => {
+                    commentContent.textContent = originalContent;
+                    commentDiv.removeChild(newActions);
+                    actionsDiv.style.display = 'block';
+                });
+            });
+        });
 
         document.querySelectorAll('.btn-delete-comment').forEach(button => {
             button.addEventListener('click', function () {

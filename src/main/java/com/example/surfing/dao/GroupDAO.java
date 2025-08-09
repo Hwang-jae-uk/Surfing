@@ -55,6 +55,61 @@ public class GroupDAO {
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 GroupDTO groupDTO = new GroupDTO();
+                groupDTO.setUserId(rs.getLong("user_id"));
+                groupDTO.setGroupMeetingId(rs.getLong("group_meeting_id"));
+                groupDTO.setPhone(rs.getString("phone"));
+                groupDTO.setUserName(rs.getString("username"));
+                groupDTO.setTitle(rs.getString("title"));
+                groupDTO.setFromLocation(rs.getString("from"));
+                groupDTO.setToLocation(rs.getString("to"));
+                groupDTO.setMaxMembers(rs.getInt("max_participants"));
+                groupDTO.setMeetingDate(LocalDate.parse(rs.getString("meeting_date")));
+                groupDTO.setCreatedAt((rs.getTimestamp("created_at")));
+                groupDTO.setDescription(rs.getString("description"));
+                groups.add(groupDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return groups;
+    }
+
+    public void deleteGroup(long groupId) {
+        String sql = "delete from group_meeting where group_meeting_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, groupId);
+            pstmt.executeUpdate();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBManager.close(conn, pstmt);
+        }
+
+    }
+
+    public List<GroupDTO> get5Groups() {
+        String sql = "select * from group_meeting as g join user as u on u.user_id = g.user_id order by created_at desc limit 4";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<GroupDTO> groups = new ArrayList<GroupDTO>();
+
+        try{
+
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                GroupDTO groupDTO = new GroupDTO();
+                groupDTO.setUserId(rs.getLong("user_id"));
+                groupDTO.setGroupMeetingId(rs.getLong("group_meeting_id"));
                 groupDTO.setPhone(rs.getString("phone"));
                 groupDTO.setUserName(rs.getString("username"));
                 groupDTO.setTitle(rs.getString("title"));

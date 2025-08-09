@@ -35,7 +35,15 @@
                                 <div class="user-avatar"></div>
                                 <span class="user-name">${group.userName}</span>
                             </div>
-                                <span><fmt:formatDate value="${group.createdAt}" pattern="yyyy-MM-dd a hh"/>시 </span>
+                                <c:if test="${user.email != null && user.userId == group.userId }">
+                                    <form class="group-delete-form" action="/groups" method="post" onclick="confirm('정말로 삭제하시겠습니까?')">
+                                        <input type="hidden" name="groupId" value="${group.groupMeetingId}">
+                                        <button type="submit" class="btn-delete-comment" >삭제하기</button>
+                                    </form>
+                                </c:if>
+                                <c:if test="${!(user.email != null && user.userId == group.userId)}">
+                                    <span><fmt:formatDate value="${group.createdAt}" pattern="yyyy-MM-dd a hh"/>시 </span>
+                                </c:if>
                         </div>
                         <div class="group-info">
                             ${group.title}
@@ -44,10 +52,7 @@
                             <p><strong>Date:</strong>${group.meetingDate}</p>
                         </div>
                         <button class="view-details-btn">View Details</button>
-<%--                        <form action="/groups" method="post">--%>
-<%--                            <input type="hidden" value="">--%>
-<%--                            <button type="submit" class="btn-delete-comment" >삭제하기</button>--%>
-<%--                        </form>--%>
+
                     </span>
                 </div>
             </c:forEach>
