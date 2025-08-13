@@ -179,4 +179,43 @@ public class CommunityDAO {
         }
 
     }
+
+    public void updatePost(CommunityPostDTO communityPostDTO) {
+        String sql = "update communitypost set title=? , content=? where communitypost_id=?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try{
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, communityPostDTO.getTitle());
+            pstmt.setString(2, communityPostDTO.getContent());
+            pstmt.setLong(3, communityPostDTO.getCommunityPostId());
+            pstmt.executeUpdate();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            DBManager.close(conn, pstmt);
+        }
+
+    }
+
+    public void updateComment(CommunityCommentDTO communityCommentDTO) {
+        String sql = "update communitycomment set content=? where communitycomment_id=?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try{
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, communityCommentDTO.getContent());
+            pstmt.setLong(2, communityCommentDTO.getCommunityCommentId());
+            pstmt.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            DBManager.close(conn, pstmt);
+        }
+
+
+    }
 }

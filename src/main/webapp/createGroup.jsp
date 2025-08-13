@@ -10,7 +10,7 @@
         <div class="create-group-header">
             <h1>Create a New Surf Group</h1>
         </div>
-        <form id="create-group" class="create-group-form" action="/creategroup" method="post" onsubmit="confirm('그룹을 생성하시겠습니까?')">
+        <form id="create-group" class="create-group-form" action="/creategroup" method="post" onsubmit="return confirm('그룹을 생성하시겠습니까?')">
             <div class="form-grid">
                 <div class="form-group">
                     <label for="group-title">Title</label>

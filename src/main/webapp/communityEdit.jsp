@@ -12,11 +12,12 @@
             <form action="/community/edit" method="post">
                 <div class="input-group">
                     <label for="title">Title</label>
-                    <input type="text" id="title" name="title" value="" required>
+                    <input type="text" id="title" name="title" value="${communityPostDTO.getTitle()}" required>
+                    <input type="hidden" id="communityPostId" name="communityPostId" value="${communityPostDTO.getCommunityPostId()}">
                 </div>
                 <div class="input-group">
                     <label for="content">Content</label>
-                    <textarea id="content" name="content" rows="10" required value="" required></textarea>
+                    <textarea id="content" name="content" rows="10" required required>${communityPostDTO.getContent()}</textarea>
                 </div>
                 <button type="submit" class="submit-btn">Submit</button>
             </form>

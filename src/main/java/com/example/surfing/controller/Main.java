@@ -15,7 +15,7 @@ import java.util.List;
 public class Main extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         GroupDAO groupDAO = new GroupDAO();
-        List<GroupDTO> groups = groupDAO.get5Groups();
+        List<GroupDTO> groups = groupDAO.getGroups();
 
         request.setAttribute("groups", groups);
         request.getRequestDispatcher("Main.jsp").forward(request, response);

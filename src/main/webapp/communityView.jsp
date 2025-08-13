@@ -17,7 +17,7 @@
                 </div>
                 <c:if test="${post.userId == user.userId}">
                     <div class="post-actions">
-                        <button onclick="location.href='/community/edit'" type="button" id="editPostBtn" class="btn btn-primary">수정</button>
+                        <button type="button" id="editPostBtn" class="btn btn-primary">수정</button>
                         <button type="button" id="deletePostBtn" class="btn btn-danger">삭제</button>
                     </div>
                 </c:if>
@@ -39,7 +39,9 @@
                     <div class="comment-date"><fmt:formatDate value="${comment.createdAt}" pattern="yyyy-MM-dd HH:mm"/></div>
                     <c:if test="${comment.userId == user.userId}">
                         <div class="comment-actions">
-                            <button class="btn btn-edit-comment" data-comment-id="${comment.communityCommentId}">수정</button>
+                            <button class="btn btn-edit-comment" data-comment-id="${comment.communityCommentId}"
+                                                                data-user-name="${comment.userName}"
+                            >수정</button>
                             <button class="btn btn-delete-comment" data-comment-id="${comment.communityCommentId}">삭제</button>
                         </div>
                     </c:if>
@@ -110,7 +112,7 @@
         const editPostBtn = document.getElementById('editPostBtn');
         if (editPostBtn) {
             editPostBtn.addEventListener('click', function () {
-                window.location.href = `/community/edit?communityPostId=${post.communityPostId}`;
+                location.href = `/community/edit?communityPostId=${post.communityPostId}`;
             });
         }
 
@@ -156,7 +158,8 @@
                     const newContent = commentDiv.querySelector('.edit-comment-textarea').value;
                     const commentId = this.getAttribute('data-comment-id');
 
-                    axios.post('/community/comment/update', { 
+                    axios.post('/community/comment/update', {
+
                         communityCommentId: commentId,
                         content: newContent
                     })
