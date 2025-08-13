@@ -33,7 +33,7 @@ public class CommunityEdit extends HttpServlet {
         communityPostDTO.setContent(content);
         communityDAO.updatePost(communityPostDTO);
 
-        response.sendRedirect("/community");
+        response.sendRedirect("/community/view?id=" + communityPostId);
 
     }
 }

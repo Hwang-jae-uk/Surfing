@@ -199,5 +199,49 @@ html , body{
         font-size: 0.8rem;
     }
 }
+.table-wrapper{
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.post-table {
+    width: 80%;
+    border-collapse: collapse;
+}
+
+.post-table th, .post-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0; /* Lighter separator for rows */
+}
+
+.post-table th {
+    font-weight: 600;
+    color: #333;
+    background-color: #f7f7f7;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+}
+
+.post-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.post-table td:nth-child(1) { width: 10%; text-align: center; }
+.post-table td:nth-child(3) { width: 15%; text-align: center; }
+.post-table td:nth-child(4) { width: 15%; text-align: center; }
+
+
+.post-table a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.post-table a:hover {
+    text-decoration: underline;
+}
 
 

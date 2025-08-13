@@ -64,6 +64,36 @@ public class CommunityDAO {
         }
         return posts;
     }
+
+    public List<CommunityPostDTO> get5Posts() {
+        String sql = "SELECT * FROM communitypost ORDER BY created_at DESC limit 5";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<CommunityPostDTO> posts = new ArrayList<>();
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                CommunityPostDTO post = new CommunityPostDTO();
+
+                post.setCommunityPostId(rs.getLong("communitypost_id"));
+                post.setTitle(rs.getString("title"));
+                post.setContent(rs.getString("content"));
+                post.setUserName(rs.getString("username"));
+                post.setCreatedAt(rs.getTimestamp("created_at"));
+                posts.add(post);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return posts;
+    }
+
     public CommunityPostDTO getPost(long postId) {
         String sql = "SELECT * FROM communitypost WHERE communitypost_id=?";
         Connection conn = null;
@@ -218,4 +248,6 @@ public class CommunityDAO {
 
 
     }
+
+
 }

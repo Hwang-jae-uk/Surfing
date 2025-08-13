@@ -67,6 +67,35 @@
                 <div class="swiper-button-next"></div>
             </div>
         </div>
+        <div class="table-wrapper">
+            <table class="post-table">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>userName</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:if test="${empty posts}">
+                    <tr>
+                        <td colspan="4">아직 게시글이 없습니다.</td>
+                    </tr>
+                </c:if>
+                <c:if test="${not empty posts}">
+                    <c:forEach var="post" items="${posts}" varStatus="status">
+                        <tr>
+                            <td>${status.index+1}</td>
+                            <td><a href="/community/view?id=${post.communityPostId}">${post.title}</a></td>
+                            <td>${post.userName}</td>
+                            <td><fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd"/></td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
+                </tbody>
+            </table>
+        </div>
     </div>
     <!-- Details Modal -->
     <div class="modal-wrapper" id="details-modal-wrapper" style="display: none;">

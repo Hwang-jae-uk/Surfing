@@ -1,6 +1,8 @@
 package com.example.surfing.controller;
 
+import com.example.surfing.dao.CommunityDAO;
 import com.example.surfing.dao.GroupDAO;
+import com.example.surfing.dto.CommunityPostDTO;
 import com.example.surfing.dto.GroupDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,7 +19,11 @@ public class Main extends HttpServlet {
         GroupDAO groupDAO = new GroupDAO();
         List<GroupDTO> groups = groupDAO.getGroups();
 
+        CommunityDAO communityDAO = new CommunityDAO();
+        List<CommunityPostDTO> posts =  communityDAO.get5Posts();
+
         request.setAttribute("groups", groups);
+        request.setAttribute("posts", posts);
         request.getRequestDispatcher("Main.jsp").forward(request, response);
 
     }
