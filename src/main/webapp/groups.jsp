@@ -17,9 +17,11 @@
                 <button onclick="location.href='/creategroup'" class="create-group-btn">Create Group</button>
             </div>
         </div>
-
+        <c:if test="${empty groups}">
+            <div class="empty-group">"소모임을 만들어 보세요"</div>
+        </c:if>
         <div class="group-card-wrapper">
-            <c:forEach var="group" items="${groups}">
+            <c:forEach var="group" items="${groups}" varStatus="status">
                 <div class="group-cards-container">
                     <span class="group-card"
                           data-phone="${group.phone}"
@@ -36,7 +38,7 @@
                                 <span class="user-name">${group.userName}</span>
                             </div>
                                 <c:if test="${user.email != null && user.userId == group.userId }">
-                                    <form class="group-delete-form" action="/groups" method="post" onclick="confirm('정말로 삭제하시겠습니까?')">
+                                    <form class="group-delete-form" action="/groups" method="post" onclick="return confirm('정말로 삭제하시겠습니까?')">
                                         <input type="hidden" name="groupId" value="${group.groupMeetingId}">
                                         <button type="submit" class="btn-delete-comment" >삭제하기</button>
                                     </form>
@@ -171,13 +173,14 @@
                 const toMatch = toValue === '' || cardTo.includes(toValue);
                 const dateMatch = dateValue === '' || cardDate === dateValue;
 
-                if (fromMatch && toMatch && dateMatch) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
+
+                // if (fromMatch && toMatch && dateMatch) {
+                //     card.style.display = 'flex';
+                // }
+                if(!(fromMatch && toMatch && dateMatch)) {
+                    card.parentElement.style.display = 'none';
                 }
             });
-
             searchModalWrapper.style.display = 'none'; // Hide modal after search
         });
     </script>

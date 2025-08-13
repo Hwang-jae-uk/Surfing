@@ -308,4 +308,11 @@ html, body {
     justify-content: center;
 }
 
+.empty-group{
+    margin: 8%;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 700;
+}
+
 

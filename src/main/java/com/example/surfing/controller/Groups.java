@@ -19,6 +19,7 @@ public class Groups extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         GroupDAO groupDAO = new GroupDAO();
         List<GroupDTO> groups = groupDAO.getGroups();
+
         HttpSession session = request.getSession();
         String email = (String)session.getAttribute("email");
         UserDAO userDAO = new UserDAO();

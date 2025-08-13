@@ -9,7 +9,7 @@
     <div class="write-container">
         <div class="write-box">
             <h2>Create a New Post</h2>
-            <form action="/community/write" method="post">
+            <form action="/community/write" method="post" onsubmit="confirm('글을 작성하시겠습니까?')">
                 <div class="input-group">
                     <label for="title">Title</label>
                     <input type="text" id="title" name="title" required>
