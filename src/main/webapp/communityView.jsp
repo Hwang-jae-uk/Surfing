@@ -25,6 +25,9 @@
         </header>
 
         <section class="post-content">
+            <c:forEach var="image" items="${postImage}">
+                <span ><img style="width: 380px; height: 380px; margin-bottom: 30px" src="${pageContext.servletContext.getInitParameter('postImage')}/${image.getPostImagePath()}"/></span>
+            </c:forEach>
             <p>${post.content}</p>
         </section>
     </article>

@@ -1,3 +1,5 @@
+<%@ page import="com.example.surfing.dao.UserDAO" %>
+<%@ page import="com.example.surfing.dto.GroupDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -34,7 +36,7 @@
                           data-members="${group.maxMembers}">
                         <div class="card-header">
                             <div class="card-header-user">
-                                <div class="user-avatar"></div>
+                                <div class="user-avatar"><img src="${group.getProfileImagePath()}"/> </div>
                                 <span class="user-name">${group.userName}</span>
                             </div>
                                 <c:if test="${user.email != null && user.userId == group.userId }">
@@ -43,15 +45,13 @@
                                         <button type="submit" class="btn-delete-comment" >삭제하기</button>
                                     </form>
                                 </c:if>
-                                <c:if test="${!(user.email != null && user.userId == group.userId)}">
-                                    <span><fmt:formatDate value="${group.createdAt}" pattern="yyyy-MM-dd a hh"/>시 </span>
-                                </c:if>
                         </div>
                         <div class="group-info">
                             ${group.title}
                             <p><strong>From:</strong> ${group.fromLocation}</p>
                             <p><strong>To:</strong> ${group.toLocation}</p>
                             <p><strong>Date:</strong>${group.meetingDate}</p>
+                            <p><strong>created:</strong><fmt:formatDate value="${group.createdAt}" pattern="yyyy-MM-dd"/></p>
                         </div>
                         <button class="view-details-btn">View Details</button>
 

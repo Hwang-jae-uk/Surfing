@@ -4,16 +4,17 @@ import com.example.surfing.dao.UserDAO;
 import com.example.surfing.dto.UserDTO;
 import com.example.surfing.utill.JSFunction;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet("/profile")
+@MultipartConfig
 public class Profile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -55,6 +56,36 @@ public class Profile extends HttpServlet {
         }
         if(!user.getPhone().equals(phone)){
             user.setPhone(phone);
+        }
+
+        Part file = request.getPart("file");
+        String originFileName = file.getSubmittedFileName();
+        if(originFileName != null && !originFileName.isEmpty()){
+            File uploadDirFile = new File(getServletContext().getInitParameter("profileImagePath"));
+
+            if(user.getOriginFileName() != null && !user.getOriginFileName().isEmpty()){
+                File alreadyFile = new File(uploadDirFile , user.getUniqueFileName());
+                if(alreadyFile.exists()){
+                    alreadyFile.delete();
+                }
+            }
+            System.out.println(user.getUniqueFileName());
+
+
+            String uniqueFileName = UUID.randomUUID().toString();
+            String extension = originFileName.substring(originFileName.lastIndexOf("."));
+            uniqueFileName = uniqueFileName + extension;
+
+
+            if(!uploadDirFile.exists()){
+                uploadDirFile.mkdirs();
+            }
+            File fileToSave = new File(uploadDirFile, uniqueFileName);
+            file.write(fileToSave.getAbsolutePath());
+            System.out.println("Saving file to: " + fileToSave.getAbsolutePath());
+
+            user.setOriginFileName(originFileName);
+            user.setUniqueFileName(uniqueFileName);
         }
 
 

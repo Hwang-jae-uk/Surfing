@@ -14,7 +14,7 @@ public class UserDAO {
         String hashed = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
         userDTO.setPassword(hashed);
 
-        String sql = "insert into user(user_name ,password,phone,email) values (?,?,?,?)";
+        String sql = "insert into user(user_name ,password,phone,email,origin_file_name ,unique_file_name) values (?,?,?,?,?,?)";
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -26,6 +26,8 @@ public class UserDAO {
             pstmt.setString(2,userDTO.getPassword());
             pstmt.setString(3,userDTO.getPhone());
             pstmt.setString(4,userDTO.getEmail());
+            pstmt.setString(5,userDTO.getOriginFileName());
+            pstmt.setString(6,userDTO.getUniqueFileName());
             result = pstmt.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
@@ -78,6 +80,8 @@ public class UserDAO {
                 userDTO.setPassword(rs.getString("password"));
                 userDTO.setPhone(rs.getString("phone"));
                 userDTO.setEmail(rs.getString("email"));
+                userDTO.setUniqueFileName(rs.getString("unique_file_name"));
+                userDTO.setOriginFileName(rs.getString("origin_file_name"));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -87,7 +91,7 @@ public class UserDAO {
         return userDTO;
     }
 
-    public UserDTO getUserById(int userId){
+    public UserDTO getUserById(long userId){
         String sql = "select * from user where user_id=?";
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -96,11 +100,12 @@ public class UserDAO {
         try{
             con = DBManager.getConnection();
             pstmt=con.prepareStatement(sql);
-            pstmt.setInt(1,userId);
+            pstmt.setLong(1,userId);
             rs=pstmt.executeQuery();
             if(rs.next()){
                 userDTO.setUserId(rs.getInt("user_id"));
                 userDTO.setUserName(rs.getString("user_name"));
+                userDTO.setUniqueFileName(rs.getString("unique_file_name"));
             }
 
         }catch (Exception e){
@@ -116,7 +121,7 @@ public class UserDAO {
     public void updateUser(UserDTO userDTO){
 //        String hashed = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
 //        userDTO.setPassword(hashed);
-        String sql = "update user set user_name=?,password=?,phone=? where email=?";
+        String sql = "update user set user_name=?,password=?,phone=?,origin_file_name=?,unique_file_name=? where email=?";
         
 
         Connection con = null;
@@ -135,7 +140,9 @@ public class UserDAO {
             pstmt.setString(1,userDTO.getUserName());
             pstmt.setString(2,userDTO.getPassword());
             pstmt.setString(3,userDTO.getPhone());
-            pstmt.setString(4,userDTO.getEmail());
+            pstmt.setString(4,userDTO.getOriginFileName());
+            pstmt.setString(5,userDTO.getUniqueFileName());
+            pstmt.setString(6,userDTO.getEmail());
             pstmt.executeUpdate();
 
         } catch (Exception e) {

@@ -25,6 +25,14 @@ public class Groups extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         UserDTO userDTO = userDAO.getUserByemail(email);
 
+        for(GroupDTO groupDTO : groups) {
+            UserDTO user = userDAO.getUserById(groupDTO.getUserId());
+            if(user!=null) {
+                String profileImagePath = getServletContext().getInitParameter("profileImage") + "\\" +user.getUniqueFileName();
+                groupDTO.setProfileImagePath(profileImagePath);
+            }
+        }
+
         request.setAttribute("user", userDTO);
         request.setAttribute("groups", groups);
         request.getRequestDispatcher("/groups.jsp").forward(request, response);
@@ -33,7 +41,6 @@ public class Groups extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         long groupId = Long.parseLong(request.getParameter("groupId"));
         GroupDAO groupDAO = new GroupDAO();
-
         groupDAO.deleteGroup(groupId);
 
         response.sendRedirect("/groups");

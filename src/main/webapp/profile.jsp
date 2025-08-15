@@ -11,7 +11,7 @@
 <div class="profile-wrapper">
     <div class="profile-box">
         <h1>Profile</h1>
-        <form action="/profile" method="post">
+        <form action="/profile" method="post" enctype="multipart/form-data">
             <div class="input-group">
                 <label for="username">User Name</label>
                 <input type="text" id="username" name="username" value="${user.userName}" required>
@@ -28,8 +28,11 @@
                 <label for="confirmnewpassword">Confirm New Password</label>
                 <input type="password" id="confirmnewpassword" name="confirmnewpassword" >
             </div>
-
-
+            <div class="input-group">
+                <label for="file">Profile Picture</label>
+                <input type="file" id="file" name="file" accept="image/*">
+                <img id="image-preview" src="#" alt="Image preview" style="border-radius: 50% ; width: 100px; height: 100px; margin-top: 10px; display: none;"/>
+            </div>
             <div class="input-group">
                 <label for="phone">Phone</label>
                 <input type="tel" id="phone" name="phone" value="${user.phone}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required placeholder="숫자만 입력하세요.">
@@ -56,6 +59,14 @@
             return false;
         }
     })
+    document.getElementById('file').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const preview = document.getElementById('image-preview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+        }
+    });
 </script>
 </body>
 </html>

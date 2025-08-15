@@ -4,6 +4,7 @@ import com.example.surfing.dao.CommunityDAO;
 import com.example.surfing.dao.UserDAO;
 import com.example.surfing.dto.CommunityCommentDTO;
 import com.example.surfing.dto.CommunityPostDTO;
+import com.example.surfing.dto.PostImagePathDTO;
 import com.example.surfing.dto.UserDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,12 +26,15 @@ public class CommunityView extends HttpServlet {
         CommunityPostDTO post = dao.getPost(postId);
         List<CommunityCommentDTO> comments = dao.getComments(postId);
 
+        List<PostImagePathDTO> postImage = dao.getPostImage(postId);
+
         HttpSession session = req.getSession();
         String email = (String)session.getAttribute("email");
         UserDAO userDao = new UserDAO();
         UserDTO userDTO = userDao.getUserByemail(email);
 
         req.setAttribute("comments", comments);
+        req.setAttribute("postImage", postImage);
         req.setAttribute("user", userDTO);
         req.setAttribute("post", post);
         req.getRequestDispatcher("/communityView.jsp").forward(req, resp);

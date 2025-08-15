@@ -3,4 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <context-param>
+        <param-name>profileImagePath</param-name>
+        <param-value>C:\Users\HOME\Desktop\새 폴더\project\jsp\surfing\src\main\webapp\uploads\userProfilePict\</param-value>
+    </context-param>
+    <context-param>
+        <param-name>profileImage</param-name>
+        <param-value>\uploads\userProfilePict\</param-value>
+    </context-param>
+    <context-param>
+        <param-name>postImagePath</param-name>
+        <param-value>C:\Users\HOME\Desktop\새 폴더\project\jsp\surfing\src\main\webapp\uploads\postPict\</param-value>
+    </context-param>
+    <context-param>
+        <param-name>postImage</param-name>
+        <param-value>\uploads\postPict\</param-value>
+    </context-param>
 </web-app>

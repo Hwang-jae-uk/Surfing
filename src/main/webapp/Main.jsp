@@ -47,7 +47,7 @@
                               data-members="${group.maxMembers}">
                             <div class="card-header">
                                 <div class="card-header-user">
-                                    <div class="user-avatar"></div>
+                                    <div class="user-avatar"><img src="${pageContext.servletContext.getInitParameter('profileImage')}/${group.getProfileImagePath()}"/></div>
                                     <span class="user-name">${group.userName}</span>
                                 </div>
                             </div>

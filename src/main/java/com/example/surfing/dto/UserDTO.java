@@ -7,6 +7,26 @@ public class UserDTO {
     private String password;
     private String phone;
     private String email;
+    private String originFileName;
+    private String uniqueFileName;
+
+    
+    public String getOriginFileName() {
+        return originFileName;
+    }
+
+    public void setOriginFileName(String originFileName) {
+        this.originFileName = originFileName;
+    }
+
+    public String getUniqueFileName() {
+        return uniqueFileName;
+    }
+
+    public void setUniqueFileName(String uniqueFileName) {
+        this.uniqueFileName = uniqueFileName;
+    }
+
 
     public String getEmail() {
         return email;

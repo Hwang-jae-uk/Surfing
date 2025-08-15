@@ -2,38 +2,67 @@ package com.example.surfing.dao;
 
 import com.example.surfing.dto.CommunityCommentDTO;
 import com.example.surfing.dto.CommunityPostDTO;
+import com.example.surfing.dto.PostImagePathDTO;
 import com.example.surfing.utill.DBManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityDAO {
 
-    public int insertPost(CommunityPostDTO post) {
+    public CommunityPostDTO insertPost(CommunityPostDTO post) {
+
+        String sql = "INSERT INTO communitypost (title, content, username,user_id) VALUES (?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO communitypost (title, content, username,user_id) VALUES (?, ?, ?, ?)";
-        int result = 0;
+        ResultSet rs = null;
+        CommunityPostDTO postDTO = new CommunityPostDTO();
 
         try {
             conn = DBManager.getConnection();
-            pstmt = conn.prepareStatement(sql);
+//            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, post.getTitle());
             pstmt.setString(2, post.getContent());
             pstmt.setString(3, post.getUserName());
             pstmt.setLong(4, post.getUserId());
-            result = pstmt.executeUpdate();
-            result = 1;
+            int rows = pstmt.executeUpdate();
+
+            if (rows>0) {
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    postDTO.setCommunityPostId(rs.getLong(1));
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            DBManager.close(conn, pstmt , rs);
+        }
+        return postDTO;
+    }
+
+    public void inserPostImage(PostImagePathDTO postImagePathDTO) {
+        String sql = "insert into post_image_path (communitypost_id , post_image_path) values (?, ?)";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, postImagePathDTO.getCommunitypostId());
+            pstmt.setString(2, postImagePathDTO.getPostImagePath());
+            pstmt.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
             DBManager.close(conn, pstmt);
         }
-        return result;
+
     }
 
     public List<CommunityPostDTO> getPosts() {
@@ -250,4 +279,44 @@ public class CommunityDAO {
     }
 
 
+    public List<PostImagePathDTO> getPostImage(long postId) {
+        String sql = "SELECT * FROM post_image_path WHERE communitypost_id=?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<PostImagePathDTO> images = new ArrayList<>();
+        try{
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, postId);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                PostImagePathDTO image = new PostImagePathDTO();
+                image.setPostImagePath(rs.getString("post_image_path"));
+                images.add(image);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+
+        return images;
+    }
+
+    public void deletePostImage(String postImagePath) {
+        String sql = "DELETE FROM post_image_path WHERE post_image_path = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, postImagePath);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+    }
 }

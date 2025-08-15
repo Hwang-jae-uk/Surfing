@@ -13,7 +13,7 @@
     <div class="signup-wrapper">
         <div class="signup-box">
             <h1>Sign Up</h1>
-            <form action="/signup"  method="post">
+            <form action="/signup"  method="post" enctype="multipart/form-data">
                 <div class="input-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
@@ -29,6 +29,11 @@
                 <div class="input-group">
                     <label for="confirm-password">Confirm Password</label>
                     <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <div class="input-group">
+                    <label for="file">Profile Picture</label>
+                    <input type="file" id="file" name="file" >
+                    <img id="image-preview" src="#" alt="Image preview" style="border-radius: 50% ; width: 100px; height: 100px; margin-top: 10px; display: none;"/>
                 </div>
                 <div class="input-group">
                     <label for="phone">Phone</label>
@@ -57,6 +62,15 @@
         }
         return true;
     })
+
+    document.getElementById('file').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const preview = document.getElementById('image-preview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+        }
+    });
 </script>
 </body>
 </html>

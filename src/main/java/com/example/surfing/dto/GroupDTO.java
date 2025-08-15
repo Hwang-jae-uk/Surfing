@@ -15,6 +15,15 @@ public class GroupDTO {
     private int maxMembers;
     private Date createdAt;
     private String phone;
+    private String profileImagePath;
+
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
+    }
 
     public long getGroupMeetingId() {
         return groupMeetingId;
