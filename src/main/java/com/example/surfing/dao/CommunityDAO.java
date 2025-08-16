@@ -32,7 +32,7 @@ public class CommunityDAO {
             pstmt.setLong(4, post.getUserId());
             int rows = pstmt.executeUpdate();
 
-            if (rows>0) {
+            if (rows > 0) {
                 rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
                     postDTO.setCommunityPostId(rs.getLong(1));
@@ -42,7 +42,7 @@ public class CommunityDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DBManager.close(conn, pstmt , rs);
+            DBManager.close(conn, pstmt, rs);
         }
         return postDTO;
     }
@@ -57,9 +57,9 @@ public class CommunityDAO {
             pstmt.setLong(1, postImagePathDTO.getCommunitypostId());
             pstmt.setString(2, postImagePathDTO.getPostImagePath());
             pstmt.executeUpdate();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt);
         }
 
@@ -74,6 +74,37 @@ public class CommunityDAO {
         try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                CommunityPostDTO post = new CommunityPostDTO();
+
+                post.setCommunityPostId(rs.getLong("communitypost_id"));
+                post.setTitle(rs.getString("title"));
+                post.setContent(rs.getString("content"));
+                post.setUserName(rs.getString("username"));
+                post.setCreatedAt(rs.getTimestamp("created_at"));
+                posts.add(post);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return posts;
+    }
+
+    public List<CommunityPostDTO> getPosts(int offset, int limit) {
+        String sql = "SELECT * FROM communitypost ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<CommunityPostDTO> posts = new ArrayList<>();
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, limit);
+            pstmt.setInt(2, offset);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -143,9 +174,9 @@ public class CommunityDAO {
                 post.setUserName(rs.getString("username"));
                 post.setCreatedAt(rs.getTimestamp("created_at"));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt, rs);
         }
         return post;
@@ -156,22 +187,23 @@ public class CommunityDAO {
         Connection conn = null;
         PreparedStatement pstmt = null;
 
-        try{
+        try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, comment.getCommunityPostId());
             pstmt.setLong(2, comment.getUserId());
             pstmt.setString(3, comment.getContent());
-            pstmt.setString(4,comment.getUserName());
+            pstmt.setString(4, comment.getUserName());
             pstmt.executeUpdate();
 
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt);
         }
     }
+
     public List<CommunityCommentDTO> getComments(long postId) {
         String sql = "SELECT * FROM communitycomment WHERE communitypost_id=?";
         Connection conn = null;
@@ -194,9 +226,9 @@ public class CommunityDAO {
                 comment.setCreatedAt(rs.getTimestamp("created_at"));
                 comments.add(comment);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt, rs);
         }
         return comments;
@@ -207,14 +239,14 @@ public class CommunityDAO {
         String sql = "DELETE FROM communitypost WHERE communitypost_id=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
-        try{
+        try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, communityPostId);
             pstmt.executeUpdate();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt);
         }
 
@@ -225,15 +257,15 @@ public class CommunityDAO {
         Connection conn = null;
         PreparedStatement pstmt = null;
 
-        try{
+        try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, communityCommentId);
             pstmt.executeUpdate();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt);
         }
 
@@ -243,7 +275,7 @@ public class CommunityDAO {
         String sql = "update communitypost set title=? , content=? where communitypost_id=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
-        try{
+        try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, communityPostDTO.getTitle());
@@ -251,9 +283,9 @@ public class CommunityDAO {
             pstmt.setLong(3, communityPostDTO.getCommunityPostId());
             pstmt.executeUpdate();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             DBManager.close(conn, pstmt);
         }
 
@@ -263,15 +295,15 @@ public class CommunityDAO {
         String sql = "update communitycomment set content=? where communitycomment_id=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
-        try{
+        try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, communityCommentDTO.getContent());
             pstmt.setLong(2, communityCommentDTO.getCommunityCommentId());
             pstmt.executeUpdate();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt);
         }
 
@@ -285,7 +317,7 @@ public class CommunityDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<PostImagePathDTO> images = new ArrayList<>();
-        try{
+        try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, postId);
@@ -295,9 +327,9 @@ public class CommunityDAO {
                 image.setPostImagePath(rs.getString("post_image_path"));
                 images.add(image);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBManager.close(conn, pstmt, rs);
         }
 
@@ -319,4 +351,34 @@ public class CommunityDAO {
             DBManager.close(conn, pstmt);
         }
     }
+
+    public List<CommunityPostDTO> searchPostsByTitle(String title) {
+        String sql = "SELECT * FROM communitypost WHERE title LIKE ? ORDER BY created_at DESC";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<CommunityPostDTO> posts = new ArrayList<>();
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + title + "%");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                CommunityPostDTO post = new CommunityPostDTO();
+                post.setCommunityPostId(rs.getLong("communitypost_id"));
+                post.setTitle(rs.getString("title"));
+                post.setContent(rs.getString("content"));
+                post.setUserName(rs.getString("username"));
+                post.setCreatedAt(rs.getTimestamp("created_at"));
+                posts.add(post);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return posts;
+    }
+    
 }

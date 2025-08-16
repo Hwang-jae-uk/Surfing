@@ -1,0 +1,22 @@
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 30px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+}

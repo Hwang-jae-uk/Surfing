@@ -59,6 +59,9 @@
                 </div>
             </c:forEach>
         </div>
+        <div class="load-more-container">
+            <button id="load-more-btn" data-page="1">Load More</button>
+        </div>
     </div>
 
     <!-- Search Modal -->
@@ -124,12 +127,13 @@
             }
         });
 
-        // Details Modal handling
+        // Details Modal handling (with event delegation)
         const detailsModalWrapper = document.getElementById('details-modal-wrapper');
         const detailsCloseBtn = document.querySelector('.close-details-btn');
+        const groupCardWrapper = document.querySelector('.group-card-wrapper');
 
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
+        groupCardWrapper.addEventListener('click', (event) => {
+            if (event.target.classList.contains('view-details-btn')) {
                 const card = event.target.closest('.group-card');
                 document.getElementById('details-phone').textContent = card.dataset.phone;
                 document.getElementById('details-title').textContent = card.dataset.title;
@@ -140,7 +144,7 @@
                 document.getElementById('details-date').textContent = card.dataset.date;
                 document.getElementById('details-members').textContent = card.dataset.members;
                 detailsModalWrapper.style.display = 'block';
-            });
+            }
         });
 
         detailsCloseBtn.addEventListener('click', () => {
@@ -173,15 +177,88 @@
                 const toMatch = toValue === '' || cardTo.includes(toValue);
                 const dateMatch = dateValue === '' || cardDate === dateValue;
 
-
-                // if (fromMatch && toMatch && dateMatch) {
-                //     card.style.display = 'flex';
-                // }
                 if(!(fromMatch && toMatch && dateMatch)) {
                     card.parentElement.style.display = 'none';
+                } else {
+                    card.parentElement.style.display = ''; // Ensure matched cards are visible
                 }
             });
             searchModalWrapper.style.display = 'none'; // Hide modal after search
+
+            // Hide the load more button after a search is performed
+            const loadMoreContainer = document.querySelector('.load-more-container');
+            if (loadMoreContainer) {
+                loadMoreContainer.style.display = 'none';
+            }
+        });
+
+        // Load More logic
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const loggedInUserId = "${user.email != null ? user.email : ''}";
+
+        loadMoreBtn.addEventListener('click', () => {
+            const currentPage = parseInt(loadMoreBtn.dataset.page, 10);
+            const nextPage = currentPage + 1;
+
+            fetch('/groups?page=' + nextPage)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(newGroups => {
+                    if (newGroups.length > 0) {
+                        loadMoreBtn.dataset.page = nextPage;
+                        newGroups.forEach(group => {
+                            const groupCardContainer = document.createElement('div');
+                            groupCardContainer.classList.add('group-cards-container');
+
+                            var deleteButtonHTML = '';
+                            if (loggedInUserId && loggedInUserId == group.userId) {
+                                deleteButtonHTML = 
+                                    '<form class="group-delete-form" action="/groups" method="post" onsubmit="return confirm(\'정말로 삭제하시겠습니까?\')">' + 
+                                    '<input type="hidden" name="groupId" value="' + group.groupMeetingId + '">' + 
+                                    '<button type="submit" class="btn-delete-comment">삭제하기</button>' + 
+                                    '</form>';
+                            }
+
+                            var cardHTML = 
+                                '<span class="group-card"' + 
+                                ' data-phone="' + group.phone + '"' + 
+                                ' data-title="' + group.title + '"' + 
+                                ' data-user="' + group.userName + '"' + 
+                                ' data-desc="' + group.description + '"' + 
+                                ' data-from="' + group.fromLocation + '"' + 
+                                ' data-to="' + group.toLocation + '"' + 
+                                ' data-date="' + group.meetingDate + '"' + 
+                                ' data-members="' + group.maxMembers + '">' + 
+                                '<div class="card-header">' + 
+                                '<div class="card-header-user">' + 
+                                '<div class="user-avatar"><img src="' + group.profileImagePath + '" alt="User Avatar"/></div>' + 
+                                '<span class="user-name">' + group.userName + '</span>' + 
+                                '</div>' + 
+                                deleteButtonHTML + 
+                                '</div>' + 
+                                '<div class="group-info">' + 
+                                group.title + 
+                                '<p><strong>From:</strong> ' + group.fromLocation + '</p>' + 
+                                '<p><strong>To:</strong> ' + group.toLocation + '</p>' + 
+                                '<p><strong>Date:</strong> ' + group.meetingDate + '</p>' + 
+                                '<p><strong>Created:</strong> ' + group.createdAt + '</p>' + 
+                                '</div>' + 
+                                '<button class="view-details-btn">View Details</button>' + 
+                                '</span>';
+                            
+                            groupCardContainer.innerHTML = cardHTML;
+                            groupCardWrapper.appendChild(groupCardContainer);
+                        });
+                    } else {
+                        loadMoreBtn.style.display = 'none';
+                        alert("불러올 소모임이 없습니다");
+                    }
+                })
+                .catch(error => console.error('Error loading more groups:', error));
         });
     </script>
 </body>
